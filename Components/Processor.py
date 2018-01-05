@@ -34,7 +34,16 @@ class DataProcessor():
         )
     @staticmethod
     def RatingMapping(dataFrame):
-        pass
+        trans = FileSystem.Translation()
+        dataFrame['3PRM Overall Risk Normalized'] = dataFrame.apply(
+            lambda row: trans[row[u'3PRM Overall Risk']],
+            axis = 1
+        )
+        dataFrame['New Assessment Filter Risk Normalized'] = dataFrame.apply(
+            lambda row: trans[row[u'New Assessment Filter Risk']],
+            axis = 1
+        )
+
     @staticmethod
     def RegionMapping(dataFrame):
         # type: (DataFrame) -> DataFrame
@@ -120,7 +129,7 @@ def _dateDifferenceInDays(startDate, endDate):
 def _analyzeReviewApproval(originalValue, validatedValue):
     # type: (str, str) -> str
 
-    translation = FileSystem.Translation()
+    translation = FileSystem.NumericTranslation()
     # validatedValue = unicode(validatedValue).encode('utf-8')
     # originalValue = unicode(originalValue).encode('utf-8')
     if translation[validatedValue] > translation[originalValue]:

@@ -1,3 +1,4 @@
+# coding: utf-8
 from collections import OrderedDict
 from os.path import isfile, dirname, join
 import json
@@ -69,7 +70,7 @@ class FileSystem():
 
         return regionDictionary
     @staticmethod
-    def Translation():
+    def NumericTranslation():
         ratings = {
             u'Low': 1,
             u'High': 2,
@@ -83,6 +84,24 @@ class FileSystem():
             None: 0,
             '': 0,
             np.nan: 0,
+        }
+        return  ratings
+
+    @staticmethod
+    def Translation():
+        ratings = {
+            u'Low': u'Low',
+            u'High': u'High',
+            u'NA': '',
+            u'Alto': u'High',
+            u'Bajo': u'Low',
+            u'低': u'Low',
+            u'高': u'High',
+            u'N/D': '',
+            'nan': '',
+            None: '',
+            '': '',
+            np.nan: '',
         }
         return ratings
 def _openAndReturnFirstSheet(directory):

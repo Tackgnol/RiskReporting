@@ -98,17 +98,23 @@ class Visualizer():
         plt.savefig('./Exports/Distributions/Distribution of '+ field +'.png', dpi=400, bbox_inches='tight')
         plt.clf()
 
-    def GenerateBarChart(self, field):
-        sns.countplot(x=field,  hue='3PRM Overall Risk', data=self._dataFrame, )
+    def GenerateBarChart(self,field, hue):
+        sns.countplot(x=field,  hue=hue, data=self._dataFrame, )
         plt.title(field)
-        plt.savefig('./Exports/Barcharts/' + field + '.png', dpi=400, bbox_inches='tight')
+        plt.xticks(rotation=45, fontsize=6)
+        plt.savefig('./Exports/Barcharts/' + field + ' - ' + hue  + '.png', dpi=400, bbox_inches='tight')
+        plt.clf()
+
+
     def _pivotDataCount(self, rows, columns, count):
         # type: (str, str, str) -> DataFrame
         return self._dataFrame.pivot_table(count, rows, columns, count_nonzero, 0)
 
+
     def _pivotDataSum(self, rows, columns, sumBy):
         # type: (str, str, str) -> DataFrame
         return self._dataFrame.pivot_table(sumBy, rows, columns, sum, 0)
+
     def _oneColPivot(self, rows, values, sortBy = None):
         # type: (str, str) -> DataFrame
         _dataSet = self._dataFrame.pivot_table(index=[rows], values=[values], aggfunc = sum)
